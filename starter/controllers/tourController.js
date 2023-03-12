@@ -49,11 +49,14 @@ exports.getTour = (req, res) => {
 
 exports.createTour = (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
-  const newTour = Object.assign({ id: newId }, req.body);
+  // const newTour = Object.assign({ id: newId }, req.body);
+  // eslint-disable-next-line node/no-unsupported-features/es-syntax
+  const newTour = { id: newId, ...req.body };
   tours.push(newTour);
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
+    // eslint-disable-next-line no-unused-vars
     (err) => {
       res.status(201).json({
         status: 'success',
