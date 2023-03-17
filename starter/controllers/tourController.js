@@ -17,6 +17,13 @@ exports.getAllTour = async (req, res) => {
     } else {
       query = query.sort('createdAt');
     }
+    // Todo: Field limiting
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
+    }
     // * EXECUTE QUERY
     const tours = await query;
     // * SEND RESPONSE
