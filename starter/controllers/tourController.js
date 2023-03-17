@@ -1,21 +1,25 @@
 const Tour = require('../models/tourModel');
 
-// const tours = JSON.parse(
-//   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
-// );
-
 exports.getAllTour = async (req, res) => {
   try {
-    // BUILD QUERY
+    // * BUILD QUERY
+    // Todo: FILTERING
     const queryObj = { ...req.query };
     const excludeFields = ['page', 'sort', 'limit', 'fields'];
     excludeFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-    const query = Tour.find(JSON.parse(queryStr));
-    // EXECUTE QUERY
+    let query = Tour.find(JSON.parse(queryStr));
+    // Todo: SORTING
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('createdAt');
+    }
+    // * EXECUTE QUERY
     const tours = await query;
-    // SEND RESPONSE
+    // * SEND RESPONSE
     res.status(200).json({
       status: 'success',
       results: tours.length,
