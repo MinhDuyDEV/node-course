@@ -112,12 +112,10 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-// tourSchema.post(/^find/, (docs, next) => {
-//   const milliseconds = Date.now() - this.start;
-//   console.log(`Query took ${milliseconds} milliseconds`);
-//   console.log(docs);
-//   next();
-// });
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds`);
+  next();
+});
 
 // * AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function (next) {
