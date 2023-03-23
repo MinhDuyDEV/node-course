@@ -6,11 +6,6 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 
-router.param('id', (req, res, next, val) => {
-  console.log(`User id is: ${val}`);
-  next();
-});
-
 router
   .route('/')
   .get(userController.getAllUsers)
