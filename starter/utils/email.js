@@ -12,7 +12,7 @@ const sendEmail = async (options) => {
   });
   // Todo2: Define the email options
   const mailOptions = {
-    from: 'Minh Duy DEV <minhduy@dev.io>',
+    from: 'Minh Duy <minhduy@dev.io>',
     to: options.email,
     subject: options.subject,
     text: options.message,
