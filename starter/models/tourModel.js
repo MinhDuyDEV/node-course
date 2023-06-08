@@ -124,7 +124,6 @@ tourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
   localField: '_id',
-  justOne: true,
 });
 
 // * DOCUMENT MIDDLEWARE: runs before .save() and .create()
